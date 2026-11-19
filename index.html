@@ -368,13 +368,13 @@
           const img = new Image();
           img.onload = function() {
             const canvas = document.createElement('canvas');
-            const maxWidth = 700;
+            const maxWidth = 500;
             const scale = maxWidth / img.width;
             canvas.width = maxWidth;
             canvas.height = img.height * scale;
             const ctx = canvas.getContext('2d');
             ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-            uploadedImages[key] = canvas.toDataURL('image/jpeg', 0.6);
+            uploadedImages[key] = canvas.toDataURL('image/jpeg', 0.45);
           }
           img.src = event.target.result;
         }
@@ -443,26 +443,19 @@
 
       fetch(SCRIPT_URL, {
         method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
         body: JSON.stringify(payload)
       })
-      .then(res => res.json())
-      .then(res => {
-        if (res.status === 'success') {
-          alert('✅ Laporan Patroli Full Area Berhasil Tersimpan di Spreadsheet!');
-          location.reload();
-        } else {
-          alert('❌ Gagal: ' + res.message);
-        }
+      .then(() => {
+        alert('✅ Laporan Patroli Full Area Berhasil Dikirim! Silakan cek baris baru di Google Sheets.');
+        location.reload();
       })
       .catch(err => {
-        alert('❌ Koneksi bermasalah.');
+        alert('❌ Gagal mengirim permintaan ke server: ' + err);
         console.error(err);
       })
       .finally(() => {
         btn.disabled = false;
         btn.innerText = 'KIRIM LAPORAN FULL';
       });
-    });
-  </script>
-</body>
-</html>
