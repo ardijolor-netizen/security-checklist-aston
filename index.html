@@ -294,7 +294,8 @@
   </main>
 
   <script>
-    const SCRIPT_URL = 'https://script.google.com/macros/library/d/1PZFBtZsx4YT6iP3mP4miwMNK5UYkLoCy-fE7t351-mm1qJxctO77lJEX/4';
+    // GANTI LINK DI BAWAH INI DENGAN URL WEB APP (/exec) DARI APPS SCRIPT ANDA
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwusJd1086PxjRIc_MmrPlThGcmX07GCCuW62xXTvOUzLOwXAJqGLDnK-_r3wzY0FAhaQ/exec';
     let currentStep = 1;
     const totalSteps = 4;
     let uploadedImages = {};
@@ -452,11 +453,15 @@
         ...uploadedImages
       };
 
+      const formBody = new URLSearchParams();
+      Object.keys(payload).forEach(key => {
+        formBody.append(key, payload[key] ?? '');
+      });
+
       fetch(SCRIPT_URL, {
         method: 'POST',
         mode: 'no-cors',
-        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-        body: JSON.stringify(payload)
+        body: formBody
       })
       .then(() => {
         alert('✅ Laporan Patroli Full Area Berhasil Dikirim! Silakan cek baris baru di Google Sheets.');
