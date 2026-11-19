@@ -26,9 +26,14 @@
       <div class="w-16 h-16 bg-slate-900 text-amber-400 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl font-bold">🛡️</div>
       <h2 class="text-xl font-bold mb-2">Login Petugas Security</h2>
       <p class="text-sm text-slate-500 mb-6">Masuk dengan Akun Google untuk memulai laporan patroli lengkap.</p>
-      <div class="flex justify-center">
+      <div class="flex justify-center mb-4">
         <div id="g_id_onload" data-client_id="706619978236-36si9jtelolee633is30fo4gf1vrh1d5.apps.googleusercontent.com" data-callback="handleCredentialResponse" data-auto_prompt="false"></div>
         <div class="g_id_signin" data-type="standard" data-size="large" data-theme="outline"></div>
+      </div>
+      <div class="border-t pt-4 mt-2">
+        <button type="button" onclick="masukLangsung()" class="w-full bg-slate-800 hover:bg-slate-700 text-amber-400 font-semibold py-2.5 px-4 rounded-lg text-sm">
+          Masuk Langsung (Tanpa Login Google)
+        </button>
       </div>
     </div>
 
@@ -37,10 +42,10 @@
       
       <!-- Info Petugas -->
       <div class="bg-blue-50 border border-blue-200 p-3 rounded-lg mb-4 flex items-center gap-3">
-        <img id="userAvatar" src="" alt="Avatar" class="w-10 h-10 rounded-full border border-blue-300">
+        <img id="userAvatar" src="https://ui-avatars.com/api/?name=Security+Aston&background=0f172a&color=fbbf24" alt="Avatar" class="w-10 h-10 rounded-full border border-blue-300">
         <div class="overflow-hidden">
           <p class="text-xs text-blue-600 font-semibold">Petugas Bertugas:</p>
-          <p id="userNameDisplay" class="text-sm font-bold truncate"></p>
+          <p id="userNameDisplay" class="text-sm font-bold truncate">Petugas Security</p>
         </div>
       </div>
 
@@ -314,6 +319,12 @@
       document.getElementById('btnLogout').classList.remove('hidden');
     }
 
+    function masukLangsung() {
+      document.getElementById('loginSection').classList.add('hidden');
+      document.getElementById('formSection').classList.remove('hidden');
+      document.getElementById('btnLogout').classList.remove('hidden');
+    }
+
     function logout() {
       location.reload();
     }
@@ -459,3 +470,7 @@
         btn.disabled = false;
         btn.innerText = 'KIRIM LAPORAN FULL';
       });
+    });
+  </script>
+</body>
+</html>
