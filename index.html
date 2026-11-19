@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Security Checklist - Aston Palembang</title>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-100 min-h-screen font-sans text-slate-800 pb-12">
+
+  <header class="bg-slate-900 text-white p-4 shadow-md sticky top-0 z-20">
+    <div class="max-w-md mx-auto flex justify-between items-center">
+      <div>
+        <h1 class="font-bold text-lg tracking-wide">ASTON PALEMBANG</h1>
+        <p class="text-xs text-amber-400">Full Patrol Security Checklist</p>
+      </div>
+      <button id="btnLogout" onclick="logout()" class="hidden text-xs bg-red-600 hover:bg-red-700 px-3 py-1 rounded font-medium">Keluar</button>
+    </div>
+  </header>
+
+  <main class="max-w-md mx-auto p-4">
+    
+    <!-- HALAMAN LOGIN -->
+    <div id="loginSection" class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 text-center mt-10">
+      <div class="w-16 h-16 bg-slate-900 text-amber-400 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl font-bold">🛡️</div>
+      <h2 class="text-xl font-bold mb-2">Login Petugas Security</h2>
+      <p class="text-sm text-slate-500 mb-6">Masuk dengan Akun Google untuk memulai laporan patroli lengkap.</p>
+      <div class="flex justify-center">
+        <div id="g_id_onload" data-client_id="706619978236-36si9jtelolee633is30fo4gf1vrh1d5.apps.googleusercontent.com" data-callback="handleCredentialResponse" data-auto_prompt="false"></div>
+        <div class="g_id_signin" data-type="standard" data-size="large" data-theme="outline"></div>
+      </div>
+    </div>
+
+    <!-- FORM MULTI-LANGKAH -->
+    <div id="formSection" class="hidden">
+      
+      <!-- Info Petugas -->
+      <div class="bg-blue-50 border border-blue-200 p-3 rounded-lg mb-4 flex items-center gap-3">
+        <img id="userAvatar" src="" alt="Avatar" class="w-10 h-10 rounded-full border border-blue-300">
+        <div class="overflow-hidden">
+          <p class="text-xs text-blue-600 font-semibold">Petugas Bertugas:</p>
+          <p id="userNameDisplay" class="text-sm font-bold truncate"></p>
+        </div>
+      </div>
+
+      <!-- Indikator Langkah -->
+      <div class="flex justify-between mb-4 text-xs font-semibold text-slate-500 bg-white p-2.5 rounded-lg border">
+        <span id="stepIndicator" class="text-slate-900 font-bold">Langkah 1 dari 4</span>
+        <span class="text-amber-600">Patroli Aston Palembang</span>
+      </div>
+
+      <form id="checklistForm" class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 space-y-4">
+        
+        <!-- STEP 1: Roof Top & Lantai 11 s.d 8 -->
+        <div class="form-step" data-step="1">
+          <h3 class="font-bold text-base text-slate-900 border-b pb-2 mb-3">1. Area Atas & Lantai Tinggi (Roof Top - Lantai 8)</h3>
+          
+          <div class="space-y-3">
+            <div>
+              <label class="block text-xs font-semibold">Nama Staff / Incharge *</label>
+              <input type="text" id="staffIncharge" required class="w-full p-2 border rounded text-sm" placeholder="Nama lengkap petugas">
+            </div>
+            
+            <div class="bg-slate-50 p-3 rounded border">
+              <label class="block text-xs font-bold text-slate-700">Roof Top</label>
+              <select id="roofTopRemarks" class="w-full p-1.5 border rounded text-xs mt-1 mb-2"><option value="Aman">Aman</option><option value="Ada Temuan">Ada Temuan</option></select>
+              <input type="file" accept="image/*" class="w-full text-xs mb-2 file-input" data-key="imgRoofTop">
+              <input type="text" id="roofTopNotes" placeholder="Keterangan Roof Top..." class="w-full p-1.5 border rounded text-xs">
+            </div>
+
+            <div class="bg-slate-50 p-3 rounded border">
+              <label class="block text-xs font-bold text-slate-700">Lantai 11 (Koridor & RBS)</label>
+              <select id="l11Remarks" class="w-full p-1.5 border rounded text-xs mt-1 mb-2"><option value="Aman">Aman</option><option value="Ada Temuan">Ada Temuan</option></select>
+              <div class="grid grid-cols-2 gap-1 mb-2">
+                <div><span class="text-[10px] text-slate-500">Foto 1:</span><input type="file" accept="image/*" class="w-full text-[10px] file-input" data-key="imgL11_1"></div>
+                <div><span class="text-[10px] text-slate-500">Foto 2:</span><input type="file" accept="image/*" class="w-full text-[10px] file-input" data-key="imgL11_2"></div>
+              </div>
+              <input type="text" id="l11Notes" placeholder="Keterangan Lt 11..." class="w-full p-1.5 border rounded text-xs">
+            </div>
+
+            <div class="bg-slate-50 p-3 rounded border">
+              <label class="block text-xs font-bold text-slate-700">Lantai 10 (Koridor & RBS)</label>
+              <select id="l10Remarks" class="w-full p-1.5 border rounded text-xs mt-1 mb-2"><option value="Aman">Aman</option><option value="Ada Temuan">Ada Temuan</option></select>
+              <div class="grid grid-cols-2 gap-1 mb-2">
+                <div><span class="text-[10px]">Foto 1:</span><input type="file" accept="image/*" class="w-full text-[10px] file-input" data-key="imgL10_1"></div>
+                <div><span class="text-[10px]">Foto 2:</span><input type="file" accept="image/*" class="w-full text-[10px] file-input" data-key="imgL10_2"></div>
+              </div>
+              <input type="text" id="l10Notes" placeholder="Keterangan Lt 10..." class="w-full p-1.5 border rounded text-xs">
+            </div>
+
+            <div class="bg-slate-50 p-3 rounded border">
+              <label class="block text-xs font-bold text-slate-700">Lantai 9 (Koridor & RBS)</label>
+              <select id="l9Remarks" class="w-full p-1.5 border rounded text-xs mt-1 mb-2"><option value="Aman">Aman</option><option value="Ada Temuan">Ada Temuan</option></select>
+              <div class="grid grid-cols-2 gap-1 mb-2">
+                <div><span class="text-[10px]">Foto 1:</span><input type="file" accept="image/*" class="w-full text-[10px] file-input" data-key="imgL9_1"></div>
+                <div><span class="text-[10px]">Foto 2:</span><input type="file" accept="image/*" class="w-full text-[10px] file-input" data-key="imgL9_2"></div>
+              </div>
+              <input type="text" id="l9Notes" placeholder="Keterangan Lt 9..." class="w-full p-1.5 border rounded text-xs">
+            </div>
+
+            <div class="bg-slate-50 p-3 rounded border">
+              <label class="block text-xs font-bold text-slate-700">Lantai 8 (Koridor & RBS)</label>
+              <select id="l8Remarks" class="w-full p-1.5 border rounded text-xs mt-1 mb-2"><option value="Aman">Aman</option><option value="Ada Temuan">Ada Temuan</option></select>
+              <div class="grid grid-cols-2 gap-1 mb-2">
+                <div><span class="text-[10px]">Foto 1:</span><input type="file" accept="image/*" class="w-full text-[10px] file-input" data-key="imgL8_1"></div>
+                <div><span class="text-[10px]">Foto 2:</span><input type="file" accept="image/*" class="w-full text-[10px] file-input" data-key="imgL8_2"></div>
+              </div>
+              <input type="text" id="l8Notes" placeholder="Keterangan Lt 8..." class="w-full p-1.5 border rounded text-xs">
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 2: Lantai 7 s.d 3 & Fasilitas -->
+        <div class="form-step hidden" data-step="2">
+          <h3 class="font-bold text-base text-slate-900 border-b pb-2 mb-3">2. Lantai 7 - 3 & Fasilitas Hotel</h3>
+          <div class="space-y-3">
+            <!-- Lantai 7 -->
+            <div class="bg-slate-50 p-3 rounded border">
+              <label class="block text-xs font-bold text-slate-700">Lantai 7 (Koridor & RBS)</label>
+              <select id="l7Remarks" class="w-full p-1.5 border rounded text-xs mt-1 mb-2"><option value="Aman">Aman</option><option value="Ada Temuan">Ada Temuan</option></select>
+              <div class="grid grid-cols-2 gap-1 mb-2">
+                <div><span class="text-[10px]">Foto 1:</span><input type="file" accept="image/*" class="w-full text-[10px] file-input" data-key="imgL7_1"></div>
+                <div><span class="text-[10px]">Foto 2:</span><input type="file" accept="image/*" class="w-full text-[10px] file-input" data-key="imgL7_2"></div>
+              </div>
+              <input type="text" id="l7Notes" placeholder="Keterangan Lt 7..." class="w-full p-1.5 border rounded text-xs">
+            </div>
+            <!-- Lantai 6 -->
+            <div class="bg-slate-50 p-3 rounded border">
+              <label class="block text-xs font-bold text-slate-700">Lantai 6 (Koridor & RBS)</label>
+              <select id="l6Remarks" class="w-full p-1.5 border rounded text-xs mt-1 mb-2"><option value="Aman">Aman</option><option value="Ada Temuan">Ada Temuan</option></select>
+              <div class="grid grid-cols-2 gap-1 mb-2">
+                <div><span class="text-[10px]">Foto 1:</span><input type="file" accept="image/*" class="w-full text-[10px] file-input" data-key="imgL6_1"></div>
+                <div><span class="text-[10px]">Foto 2:</span><input type="file" accept="image/*" class="w-full text-[10px] file-input" data-key="imgL6_2"></div>
+              </div>
+              <input type="text" id="l6Notes" placeholder="Keterangan Lt 6..." class="w-full p-1.5 border rounded text-xs">
+            </div>
+            <!-- Lantai 5 -->
+            <div class="bg-slate-50 p-3 rounded border">
+              <label class="block text-xs font-bold text-slate-700">Lantai 5 (Koridor & RBS)</label>
+              <select id="l5Remarks" class="w-full p-1.5 border rounded text-xs mt-1 mb-2"><option value="Aman">Aman</option><option value="Ada Temuan">Ada Temuan</option></select>
+              <div class="grid grid-cols-2 gap-1 mb-2">
+                <div><span class="text-[10px]">Foto 1:</span><input type="file" accept="image/*" class="w-full text-[10px] file-input" data-key="imgL5_1"></div>
+                <div><span class="text-[10px]">Foto 2:</span><input type="file" accept="image/*" class="w-full text-[10px] file-input" data-key="imgL5_2"></div>
+              </div>
+              <input type="text" id="l5Notes" placeholder="Keterangan Lt 5..." class="w-full p-1.5 border rounded text-xs">
+            </div>
+            <!-- Lantai 3 -->
+            <div class="bg-slate-50 p-3 rounded border">
+              <label class="block text-xs font-bold text-slate-700">Lantai 3 (Koridor)</label>
+              <select id="l3Remarks" class="w-full p-1.5 border rounded text-xs mt-1 mb-2"><option value="Aman">Aman</option><option value="Ada Temuan">Ada Temuan</option></select>
+              <input type="file" accept="image/*" class="w-full text-xs mb-2 file-input" data-key="imgL3">
+              <input type="text" id="l3Notes" placeholder="Keterangan Lt 3..." class="w-full p-1.5 border rounded text-xs">
+            </div>
+            <!-- Fitness -->
+            <div class="bg-slate-50 p-3 rounded border">
+              <label class="block text-xs font-bold text-slate-700">Fitness</label>
+              <select id="fitnessRemarks" class="w-full p-1.5 border rounded text-xs mt-1 mb-2"><option value="Aman">Aman</option><option value="Ada Temuan">Ada Temuan</option></select>
+              <input type="file" accept="image/*" class="w-full text-xs mb-2 file-input" data-key="imgFitness">
+              <input type="text" id="fitnessNotes" placeholder="Keterangan Fitness..." class="w-full p-1.5 border rounded text-xs">
+            </div>
+            <!-- Pool -->
+            <div class="bg-slate-50 p-3 rounded border">
+              <label class="block text-xs font-bold text-slate-700">Pool</label>
+              <select id="poolRemarks" class="w-full p-1.5 border rounded text-xs mt-1 mb-2"><option value="Aman">Aman</option><option value="Ada Temuan">Ada Temuan</option></select>
+              <input type="file" accept="image/*" class="w-full text-xs mb-2 file-input" data-key="imgPool">
+              <input type="text" id="poolNotes" placeholder="Keterangan Pool..." class="w-full p-1.5 border rounded text-xs">
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 3: Golden Sand & Public Area -->
+        <div class="form-step hidden" data-step="3">
+          <h3 class="font-bold text-base text-slate-900 border-b pb-2 mb-3">3. Area Golden Sand & Publik</h3>
+          <div class="space-y-3">
+            <!-- GS 1 -->
+            <div class="bg-slate-50 p-3 rounded border">
+              <label class="block text-xs font-bold text-slate-700">Golden Sand 1</label>
+              <select id="gs1Remarks" class="w-full p-1.5 border rounded text-xs mt-1 mb-2"><option value="Aman">Aman</option><option value="Ada Temuan">Ada Temuan</option></select>
+              <input type="file" accept="image/*" class="w-full text-xs mb-2 file-input" data-key="imgGS1">
+              <input type="text" id="gs1Notes" placeholder="Keterangan GS 1..." class="w-full p-1.5 border rounded text-xs">
+            </div>
+            <!-- GS 23 -->
+            <div class="bg-slate-50 p-3 rounded border">
+              <label class="block text-xs font-bold text-slate-700">Golden Sand 2 & 3</label>
+              <select id="gs23Remarks" class="w-full p-1.5 border rounded text-xs mt-1 mb-2"><option value="Aman">Aman</option><option value="Ada Temuan">Ada Temuan</option></select>
+              <input type="file" accept="image/*" class="w-full text-xs mb-2 file-input" data-key="imgGS23">
+              <input type="text" id="gs23Notes" placeholder="Keterangan GS 23..." class="w-full p-1.5 border rounded text-xs">
+            </div>
+            <!-- GS 56 -->
+            <div class="bg-slate-50 p-3 rounded border">
+              <label class="block text-xs font-bold text-slate-700">Golden Sand 5 & 6</label>
+              <select id="gs56Remarks" class="w-full p-1.5 border rounded text-xs mt-1 mb-2"><option value="Aman">Aman</option><option value="Ada Temuan">Ada Temuan</option></select>
+              <input type="file" accept="image/*" class="w-full text-xs mb-2 file-input" data-key="imgGS56">
+              <input type="text" id="gs56Notes" placeholder="Keterangan GS 56..." class="w-full p-1.5 border rounded text-xs">
+            </div>
+            <!-- Lobby -->
+            <div class="bg-slate-50 p-3 rounded border">
+              <label class="block text-xs font-bold text-slate-700">Lobby</label>
+              <select id="lobbyRemarks" class="w-full p-1.5 border rounded text-xs mt-1 mb-2"><option value="Aman">Aman</option><option value="Ada Temuan">Ada Temuan</option></select>
+              <input type="file" accept="image/*" class="w-full text-xs mb-2 file-input" data-key="imgLobby">
+              <input type="text" id="lobbyNotes" placeholder="Keterangan Lobby..." class="w-full p-1.5 border rounded text-xs">
+            </div>
+            <!-- Ballroom -->
+            <div class="bg-slate-50 p-3 rounded border">
+              <label class="block text-xs font-bold text-slate-700">Ballroom</label>
+              <select id="ballroomRemarks" class="w-full p-1.5 border rounded text-xs mt-1 mb-2"><option value="Aman">Aman</option><option value="Ada Temuan">Ada Temuan</option></select>
+              <input type="file" accept="image/*" class="w-full text-xs mb-2 file-input" data-key="imgBallroom">
+              <input type="text" id="ballroomNotes" placeholder="Keterangan Ballroom..." class="w-full p-1.5 border rounded text-xs">
+            </div>
+            <!-- Prefunction -->
+            <div class="bg-slate-50 p-3 rounded border">
+              <label class="block text-xs font-bold text-slate-700">Prefunction</label>
+              <select id="prefuncRemarks" class="w-full p-1.5 border rounded text-xs mt-1 mb-2"><option value="Aman">Aman</option><option value="Ada Temuan">Ada Temuan</option></select>
+              <input type="file" accept="image/*" class="w-full text-xs mb-2 file-input" data-key="imgPrefunction">
+              <input type="text" id="prefuncNotes" placeholder="Keterangan Prefunction..." class="w-full p-1.5 border rounded text-xs">
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 4: Area Luar, Parkir, BOH & Info Tambahan -->
+        <div class="form-step hidden" data-step="4">
+          <h3 class="font-bold text-base text-slate-900 border-b pb-2 mb-3">4. Parkir, BOH & Informasi Harian</h3>
+          <div class="space-y-3">
+            <!-- Koridor Ocean & Emperor -->
+            <div class="bg-slate-50 p-3 rounded border">
+              <label class="block text-xs font-bold text-slate-700">Koridor Ocean & Emperor</label>
+              <select id="oceanEmpRemarks" class="w-full p-1.5 border rounded text-xs mt-1 mb-2"><option value="Aman">Aman</option><option value="Ada Temuan">Ada Temuan</option></select>
+              <input type="file" accept="image/*" class="w-full text-xs mb-2 file-input" data-key="imgOceanEmp">
+              <input type="text" id="oceanEmpNotes" placeholder="Keterangan..." class="w-full p-1.5 border rounded text-xs">
+            </div>
+            <!-- Parkir Belakang Ocean -->
+            <div class="bg-slate-50 p-3 rounded border">
+              <label class="block text-xs font-bold text-slate-700">Parkiran Belakang Ocean</label>
+              <select id="parkirBelakangRemarks" class="w-full p-1.5 border rounded text-xs mt-1 mb-2"><option value="Aman">Aman</option><option value="Ada Temuan">Ada Temuan</option></select>
+              <input type="file" accept="image/*" class="w-full text-xs mb-2 file-input" data-key="imgParkirBelakang">
+              <input type="text" id="parkirBelakangNotes" placeholder="Keterangan..." class="w-full p-1.5 border rounded text-xs">
+            </div>
+            <!-- Workshop Engineering -->
+            <div class="bg-slate-50 p-3 rounded border">
+              <label class="block text-xs font-bold text-slate-700">Workshop Engineering</label>
+              <select id="workshopRemarks" class="w-full p-1.5 border rounded text-xs mt-1 mb-2"><option value="Aman">Aman</option><option value="Ada Temuan">Ada Temuan</option></select>
+              <input type="file" accept="image/*" class="w-full text-xs mb-2 file-input" data-key="imgWorkshop">
+              <input type="text" id="workshopNotes" placeholder="Keterangan..." class="w-full p-1.5 border rounded text-xs">
+            </div>
+            <!-- Parkir Depan -->
+            <div class="bg-slate-50 p-3 rounded border">
+              <label class="block text-xs font-bold text-slate-700">Parkiran Depan</label>
+              <select id="parkirDepanRemarks" class="w-full p-1.5 border rounded text-xs mt-1 mb-2"><option value="Aman">Aman</option><option value="Ada Temuan">Ada Temuan</option></select>
+              <input type="file" accept="image/*" class="w-full text-xs mb-2 file-input" data-key="imgParkirDepan">
+              <input type="text" id="parkirDepanNotes" placeholder="Keterangan..." class="w-full p-1.5 border rounded text-xs">
+            </div>
+            <!-- BOH -->
+            <div class="bg-slate-50 p-3 rounded border">
+              <label class="block text-xs font-bold text-slate-700">BOH (Back of House)</label>
+              <select id="bohRemarks" class="w-full p-1.5 border rounded text-xs mt-1 mb-2"><option value="Aman">Aman</option><option value="Ada Temuan">Ada Temuan</option></select>
+              <input type="file" accept="image/*" class="w-full text-xs mb-2 file-input" data-key="imgBOH">
+              <input type="text" id="bohNotes" placeholder="Keterangan..." class="w-full p-1.5 border rounded text-xs">
+            </div>
+
+            <!-- Kolom Informasi Terakhir (BX, BY, BZ) -->
+            <div class="pt-2 border-t space-y-2">
+              <div>
+                <label class="block text-xs font-semibold">Occupancy Today (BX)</label>
+                <input type="text" id="occupancyToday" class="w-full p-2 border rounded text-sm" placeholder="Contoh: 75%">
+              </div>
+              <div>
+                <label class="block text-xs font-semibold">DND Info (BY)</label>
+                <input type="text" id="dndInfo" class="w-full p-2 border rounded text-sm" placeholder="Info kamar DND...">
+              </div>
+              <div>
+                <label class="block text-xs font-semibold">Event Today (BZ)</label>
+                <input type="text" id="eventToday" class="w-full p-2 border rounded text-sm" placeholder="Jadwal event hari ini...">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tombol Navigasi -->
+        <div class="flex gap-2 pt-3 border-t">
+          <button type="button" id="btnPrev" onclick="changeStep(-1)" class="hidden w-1/3 bg-slate-200 hover:bg-slate-300 font-bold py-2.5 rounded text-sm">Kembali</button>
+          <button type="button" id="btnNext" onclick="changeStep(1)" class="w-full bg-slate-900 hover:bg-slate-800 text-amber-400 font-bold py-2.5 rounded text-sm">Lanjut ➡️</button>
+          <button type="submit" id="btnSubmit" class="hidden w-2/3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded text-sm">KIRIM LAPORAN FULL</button>
+        </div>
+
+      </form>
+    </div>
+
+  </main>
+
+  <script>
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxc5QY46KLku_bYXW60V4Kos77TK0_CbK9kc_8AFQz7Ga402PKue0BDXmoSMUWdnCfDdg/exec';
+    let currentStep = 1;
+    const totalSteps = 4;
+    let uploadedImages = {};
+
+    function parseJwt(token) {
+      var base64Url = token.split('.')[1];
+      var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+      var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+      }).join(''));
+      return JSON.parse(jsonPayload);
+    }
+
+    function handleCredentialResponse(response) {
+      const payload = parseJwt(response.credential);
+      document.getElementById('userNameDisplay').innerText = payload.name + ' (' + payload.email + ')';
+      document.getElementById('userAvatar').src = payload.picture;
+      document.getElementById('staffIncharge').value = payload.name;
+
+      document.getElementById('loginSection').classList.add('hidden');
+      document.getElementById('formSection').classList.remove('hidden');
+      document.getElementById('btnLogout').classList.remove('hidden');
+    }
+
+    function logout() {
+      location.reload();
+    }
+
+    // Navigasi Langkah
+    function changeStep(direction) {
+      const steps = document.querySelectorAll('.form-step');
+      
+      // Validasi sederhana sebelum lanjut
+      if (direction === 1) {
+        const activeStepEl = document.querySelector(`.form-step[data-step="${currentStep}"]`);
+        const inputs = activeStepEl.querySelectorAll('input[required]');
+        for (let input of inputs) {
+          if (!input.value) {
+            alert('Mohon isi kolom yang wajib diisi terlebih dahulu!');
+            input.focus();
+            return;
+          }
+        }
+      }
+
+      currentStep += direction;
+      if (currentStep < 1) currentStep = 1;
+      if (currentStep > totalSteps) currentStep = totalSteps;
+
+      steps.forEach(s => s.classList.add('hidden'));
+      document.querySelector(`.form-step[data-step="${currentStep}"]`).classList.remove('hidden');
+      
+      document.getElementById('stepIndicator').innerText = `Langkah ${currentStep} dari 4`;
+
+      // Atur tombol
+      document.getElementById('btnPrev').classList.toggle('hidden', currentStep === 1);
+      if (currentStep === totalSteps) {
+        document.getElementById('btnNext').classList.add('hidden');
+        document.getElementById('btnSubmit').classList.remove('hidden');
+      } else {
+        document.getElementById('btnNext').classList.remove('hidden');
+        document.getElementById('btnSubmit').classList.add('hidden');
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Kompresi foto otomatis saat dipilih
+    document.querySelectorAll('.file-input').forEach(input => {
+      input.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        const key = e.target.getAttribute('data-key');
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = function(event) {
+          const img = new Image();
+          img.onload = function() {
+            const canvas = document.createElement('canvas');
+            const maxWidth = 700;
+            const scale = maxWidth / img.width;
+            canvas.width = maxWidth;
+            canvas.height = img.height * scale;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            uploadedImages[key] = canvas.toDataURL('image/jpeg', 0.6);
+          }
+          img.src = event.target.result;
+        }
+        reader.readAsDataURL(file);
+      });
+    });
+
+    // Kirim seluruh data
+    document.getElementById('checklistForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const btn = document.getElementById('btnSubmit');
+      btn.disabled = true;
+      btn.innerText = '⏳ MENGIRIM SELURUH DATA & FOTO KE DATABASE...';
+
+      let payload = {
+        staffIncharge: document.getElementById('staffIncharge').value,
+        roofTopRemarks: document.getElementById('roofTopRemarks').value,
+        roofTopNotes: document.getElementById('roofTopNotes').value,
+        l11Remarks: document.getElementById('l11Remarks').value,
+        l11Notes: document.getElementById('l11Notes').value,
+        l10Remarks: document.getElementById('l10Remarks').value,
+        l10Notes: document.getElementById('l10Notes').value,
+        l9Remarks: document.getElementById('l9Remarks').value,
+        l9Notes: document.getElementById('l9Notes').value,
+        l8Remarks: document.getElementById('l8Remarks').value,
+        l8Notes: document.getElementById('l8Notes').value,
+        l7Remarks: document.getElementById('l7Remarks').value,
+        l7Notes: document.getElementById('l7Notes').value,
+        l6Remarks: document.getElementById('l6Remarks').value,
+        l6Notes: document.getElementById('l6Notes').value,
+        l5Remarks: document.getElementById('l5Remarks').value,
+        l5Notes: document.getElementById('l5Notes').value,
+        l3Remarks: document.getElementById('l3Remarks').value,
+        l3Notes: document.getElementById('l3Notes').value,
+        fitnessRemarks: document.getElementById('fitnessRemarks').value,
+        fitnessNotes: document.getElementById('fitnessNotes').value,
+        poolRemarks: document.getElementById('poolRemarks').value,
+        poolNotes: document.getElementById('poolNotes').value,
+        gs1Remarks: document.getElementById('gs1Remarks').value,
+        gs1Notes: document.getElementById('gs1Notes').value,
+        gs23Remarks: document.getElementById('gs23Remarks').value,
+        gs23Notes: document.getElementById('gs23Notes').value,
+        gs56Remarks: document.getElementById('gs56Remarks').value,
+        gs56Notes: document.getElementById('gs56Notes').value,
+        lobbyRemarks: document.getElementById('lobbyRemarks').value,
+        lobbyNotes: document.getElementById('lobbyNotes').value,
+        ballroomRemarks: document.getElementById('ballroomRemarks').value,
+        ballroomNotes: document.getElementById('ballroomNotes').value,
+        prefuncRemarks: document.getElementById('prefuncRemarks').value,
+        prefuncNotes: document.getElementById('prefuncNotes').value,
+        oceanEmpRemarks: document.getElementById('oceanEmpRemarks').value,
+        oceanEmpNotes: document.getElementById('oceanEmpNotes').value,
+        parkirBelakangRemarks: document.getElementById('parkirBelakangRemarks').value,
+        parkirBelakangNotes: document.getElementById('parkirBelakangNotes').value,
+        workshopRemarks: document.getElementById('workshopRemarks').value,
+        workshopNotes: document.getElementById('workshopNotes').value,
+        parkirDepanRemarks: document.getElementById('parkirDepanRemarks').value,
+        parkirDepanNotes: document.getElementById('parkirDepanNotes').value,
+        bohRemarks: document.getElementById('bohRemarks').value,
+        bohNotes: document.getElementById('bohNotes').value,
+        occupancyToday: document.getElementById('occupancyToday').value,
+        dndInfo: document.getElementById('dndInfo').value,
+        eventToday: document.getElementById('eventToday').value,
+        ...uploadedImages
+      };
+
+      fetch(SCRIPT_URL, {
+        method: 'POST',
+        body: JSON.stringify(payload)
+      })
+      .then(res => res.json())
+      .then(res => {
+        if (res.status === 'success') {
+          alert('✅ Laporan Patroli Full Area Berhasil Tersimpan di Spreadsheet!');
+          location.reload();
+        } else {
+          alert('❌ Gagal: ' + res.message);
+        }
+      })
+      .catch(err => {
+        alert('❌ Koneksi bermasalah.');
+        console.error(err);
+      })
+      .finally(() => {
+        btn.disabled = false;
+        btn.innerText = 'KIRIM LAPORAN FULL';
+      });
+    });
+  </script>
+</body>
+</html>
